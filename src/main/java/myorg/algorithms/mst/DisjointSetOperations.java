@@ -16,7 +16,7 @@ Find out using Disjoint Set Operations :
 	
 Expected Output:
 	Since(2-->3 and 5-->3) Hence (5-->2) - Print ("5 is a friend of 2")
-	Since(6-->4 and 4 is not related to any other member) Hence Print("6 is not a friend of 2")
+	Since(6-->4 and 4 is not related to any other member) Hence Print("6 is not a friend of 2") 
 	
 Console Output:
 	5 is a friend of 2
@@ -25,6 +25,8 @@ Console Output:
 */
 //#########################################################################
 /*
+ * @AUTHOR : Titilima Dash
+ * 
 Class: DisjointSetOperations
 Data Members : 
 
