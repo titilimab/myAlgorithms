@@ -24,15 +24,23 @@
 
 			Graph2: 0 --> 1
 					1 --> 2
+					
+			Graph3 :0 --> 1
+					1 --> 2
+		            2 --> 3
+					2 --> 4
+					3 --> 5
 
 Expected Output : 
 
  			Graph1 contains cycle (1-->0, 0-->2, 2-->1)
  			Graph2 doesn't contain cycle (0 --> 1, 1 --> 2)
+ 			Graph3 doesn't contain cycle(0-->1, 1 --> 2, 2 --> 3, 2 --> 4, 3 --> 5)
 
-Console Output :
+Console Output :(Ignore System.out.println() statements)
 			Graph1 contains cycle 
  			Graph2 doesn't contain cycle
+ 			Graph3 doesn't contain cycle
 
 ##############################################################################################
 
@@ -49,8 +57,10 @@ Console Output :
  													int parent(The parent of the vertex v). And this function returns Boolean as true if the input vertex v is already visited.
  	4. Boolean icCyclic() : This method finds out if the graph contains a cycle and returns true if it contains a cycle.
 
- */
+ 
 
+##############################################################################################
+*/
 
 package myorg.algorithms.mst;
 
@@ -187,7 +197,7 @@ public class CyclicGraphDetectionByAdjacencyList
 			System.out.println("Graph2 contains cycle");
 		else
 			System.out.println("Graph2 doesn't contain cycle");
-
+		
 		//Graph3 :
 		System.out.println("################ Graph 3 #####################");
 		CyclicGraphDetectionByAdjacencyList g3 = new CyclicGraphDetectionByAdjacencyList(6);
@@ -196,12 +206,7 @@ public class CyclicGraphDetectionByAdjacencyList
 		g3.addEdge(2, 3);
 		g3.addEdge(2, 4);
 		g3.addEdge(3, 5);
-		/*
-				Vertex Array: [0, 1, 2], Adjacency List: [[1], [0, 2], [1]]
-				Adjacent Vertices to 0 : [1] (0-->1)
-				Adjacent Vertices to 1 : [0, 2] (0-->1, 1-->2)
-				Adjacent Vertices to 2 : [1] (1-->2)
-		 */
+		
 		if (g3.isCyclic())
 			System.out.println("Graph3 contains cycle");
 		else
