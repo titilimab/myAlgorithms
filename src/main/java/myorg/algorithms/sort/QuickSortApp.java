@@ -31,10 +31,12 @@ public class QuickSortApp {
 		System.out.println("Enter the max size of the array : ");
 		Scanner maxSizeObj = new Scanner(System.in);
 		maxSize = maxSizeObj.nextInt();
-		values = new long[maxSize];
-		Scanner valuesObj = new Scanner(System.in);
-		System.out.println("Enter all the elements in the array :");
+		
 		arr = new ArrayIns(maxSize);
+		
+		values = new long[maxSize];
+		System.out.println("Enter all the elements in the array :");
+		Scanner valuesObj = new Scanner(System.in);
 		for(int j=0; j<maxSize; j++){
 			
 			values[j] = valuesObj.nextInt();
