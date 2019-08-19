@@ -148,9 +148,9 @@ class Graph
 		int queueIndex = thePQ.find(newVert);
 		if(queueIndex != -1) // got edge’s index
 		{
-			Edge tempEdge = thePQ.peekN(queueIndex); // get edge
-			int oldDist = tempEdge.distance;
-			if(oldDist > newDist) // if new edge shorter,
+			Edge ExistingEdge = thePQ.peekN(queueIndex); // get edge
+			int ExistingDist = ExistingEdge.distance;
+			if(ExistingDist > newDist) // if new edge shorter,
 			{
 				thePQ.removeN(queueIndex); // remove old edge
 				Edge theEdge = new Edge(currentVert, newVert, newDist);
