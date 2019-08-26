@@ -116,6 +116,13 @@ class Tree
 		} // end while
 		// found node to delete
 		// if no children, simply delete it
+		
+		/*Case 1 : When node to be deleted has no children
+		 * 	1. When the node to be deleted itself is a root node it means the tree contains only 1 node that is root node
+		 * 	2. When the node to be deleted itself is the left child of its parent
+		 * 	3. When the node to be deleted itself is the right child of its parent
+		 * */
+		
 		if(current.leftChild==null &&
 				current.rightChild==null)
 		{
@@ -127,6 +134,11 @@ class Tree
 				parent.rightChild = null;
 		}
 		// if no right child, replace with left subtree
+		/* Case 2 : When node to be deleted has only one child and the child is a left child
+		 * 	1. When the node to be deleted itself is a root node 
+		 *	2. When the node to be deleted itself is the left child of its parent 
+		 *	3. When the node to be deleted itself is the right child of its parent
+		 * */
 		else if(current.rightChild==null)
 			if(current == root)
 				root = current.leftChild;
@@ -135,6 +147,12 @@ class Tree
 			else
 				parent.rightChild = current.leftChild;
 		// if no left child, replace with right subtree
+		
+		/* Case 2 : When node to be deleted has only one child and the child is a right child
+		 * 	1. When the node to be deleted itself is a root node 
+		 *	2. When the node to be deleted itself is the left child of its parent 
+		 *	3. When the node to be deleted itself is the right child of its parent
+		 * */
 		else if(current.leftChild==null)
 			if(current == root)
 				root = current.rightChild;
@@ -142,6 +160,12 @@ class Tree
 				parent.leftChild = current.rightChild;
 			else
 				parent.rightChild = current.rightChild;
+		
+		/* Case 3 : When node to be deleted has two children(left and right child nodes) : Find the inorder successor 
+		 * 1. When the node to be deleted itself is a root node
+		 * 2. When the node to be deleted itself is the left child of its parent
+		 * 3. When the node to be deleted itself is the right child of its parent
+		 */
 		else // two children, so replace with inorder successor
 		{
 			// get successor of node to delete (current)
@@ -367,3 +391,79 @@ public class TreeApp {
 	// -------------------------------------------------------------
 } // end class TreeApp
 ////////////////////////////////////////////////////////////////
+
+/******* Expected Output ***************/
+ /* 
+Enter first letter of show, insert, find, delete, or traverse: s
+......................................................
+                                50                                                              
+                25                              75                              
+        12              37              --              87              
+    --      --      30      43      --      --      --      93      
+  --  --  --  --  --  33  --  --  --  --  --  --  --  --  --  97  
+......................................................
+Enter first letter of show, insert, find, delete, or traverse: 32
+Invalid entry
+Enter first letter of show, insert, find, delete, or traverse: i
+Enter value to insert: 32
+Enter first letter of show, insert, find, delete, or traverse: s
+......................................................
+                                50                                                              
+                25                              75                              
+        12              37              --              87              
+    --      --      30      43      --      --      --      93      
+  --  --  --  --  --  33  --  --  --  --  --  --  --  --  --  97  
+ --------------------32------------------------------------------
+......................................................
+Enter first letter of show, insert, find, delete, or traverse: f
+Enter value to find: 43
+Found: {43, 1.7} 
+43
+Enter first letter of show, insert, find, delete, or traverse: f
+Enter value to find: 35
+Could not find 35
+Enter first letter of show, insert, find, delete, or traverse: d
+Enter value to delete: 30
+Deleted 30
+30
+Enter first letter of show, insert, find, delete, or traverse: s
+......................................................
+                                50                                                              
+                25                              75                              
+        12              37              --              87              
+    --      --      33      43      --      --      --      93      
+  --  --  --  --  32  --  --  --  --  --  --  --  --  --  --  97  
+......................................................
+Enter first letter of show, insert, find, delete, or traverse: d
+Enter value to delete: 55
+Could not delete 55
+Enter first letter of show, insert, find, delete, or traverse: s
+......................................................
+                                50                                                              
+                25                              75                              
+        12              37              --              87              
+    --      --      33      43      --      --      --      93      
+  --  --  --  --  32  --  --  --  --  --  --  --  --  --  --  97  
+......................................................
+Enter first letter of show, insert, find, delete, or traverse: t
+Enter type 1, 2 or 3: 1
+
+Preorder traversal: 50 25 12 37 33 32 43 75 87 93 97 
+Enter first letter of show, insert, find, delete, or traverse: t
+Enter type 1, 2 or 3: 2
+
+Inorder traversal: 12 25 32 33 37 43 50 75 87 93 97 
+Enter first letter of show, insert, find, delete, or traverse: t
+Enter type 1, 2 or 3: 3
+
+Postorder traversal: 12 32 33 43 37 25 97 93 87 75 50 
+Enter first letter of show, insert, find, delete, or traverse: s
+......................................................
+                                50                                                              
+                25                              75                              
+        12              37              --              87              
+    --      --      33      43      --      --      --      93      
+  --  --  --  --  32  --  --  --  --  --  --  --  --  --  --  97  
+......................................................
+Enter first letter of show, insert, find, delete, or traverse: 
+*/
