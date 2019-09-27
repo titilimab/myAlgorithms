@@ -20,6 +20,7 @@ class Node
 	}
 } // end class Node
 ////////////////////////////////////////////////////////////////
+
 /*********Class Tree contains Total of 10 methods including Constructor method to perform below operations***********
  1.	public Tree() - Constructor 
  2. public Node find(int key) - Find Node containing the specific key
@@ -30,9 +31,9 @@ class Node
  7. private void preOrder(Node localRoot)
  8. private void inOrder(Node localRoot)
  9. private void postOrder(Node localRoot)
- 10. public void displayTree()
+ 10.public void displayTree()
  
- * **************************/
+ ***************************/
 class Tree
 {
 	private Node root; // first node of tree
@@ -61,9 +62,9 @@ class Tree
 		Node newNode = new Node(); // make new node
 		newNode.iData = id; // insert data
 		newNode.dData = dd;
-		if(root==null) // no node in root
+		if(root==null) // no node in root : This is when we start a new Tree from scratch by making the newNode as the root node
 			root = newNode;
-		else // root occupied
+		else // root occupied : This is when a Tree already exists and we need to find the position to insert the newNode and when position is found we perform insertion
 		{
 			Node current = root; // start at root
 			Node parent;
@@ -92,6 +93,15 @@ class Tree
 		} // end else not root
 	} // end insert()
 	// -------------------------------------------------------------
+	
+	/* Step 1 : First find the node to be deleted
+	 * Step 2 : When you have found the node, consider the below 3 cases and sub-cases of the 3 cases.
+	 * 	1. The node to be deleted is a leaf(has no children)
+	 *	2. The node to be deleted has one child
+	 *			- When the child of the node to be deleted is a left child
+	 *			- When the child of the node to be deleted is a right child
+	 *	3. The node to be deleted has two children(one left and one right child as obvious)  
+	 * */
 
 	public boolean delete(int key) // delete node with given key
 	{ // (assumes non-empty list)
@@ -184,8 +194,13 @@ class Tree
 		return true; // success
 	} // end delete()
 	// -------------------------------------------------------------
-	// returns node with next-highest value after delNode
-	// goes to right child, then right child"s left descendents
+	/*To Find inOrder Successor:Inorder Successor of a delNode is that node whose value is the immediate next higher value to the delNode value
+	- returns node with next-highest value after delNode
+	- go to right child, then right child's left descendents untill you find a node which has no more left child. It may/may not have right child
+		There are 2 conditions to above
+		1. When the Inorder Successor itself is the right child. It means it does not have left child. It may/may not have right child
+		2. When the Inorder successor is a node which is the lowest descendant of the immediate right node of the delNode. It does not have left child. It may/may have right child
+	*/
 	private Node getSuccessor(Node delNode)
 	{
 		Node successorParent = delNode;
@@ -198,7 +213,7 @@ class Tree
 			current = current.leftChild; // go to left child
 		}
 		// if successor not
-		if(successor != delNode.rightChild) // right child,
+		if(successor != delNode.rightChild) // If successor itself is not the direct right child of the delNode
 		{ // make connections
 			successorParent.leftChild = successor.rightChild;
 			successor.rightChild = delNode.rightChild;
@@ -256,19 +271,132 @@ class Tree
 	}
 
 	//-------------------------------------------------------------
+	
+/*
+Expected Display of Tree as below :
+.................................................
+                                50                                                              
+                25                              75                              
+        12              37              --              87              
+    --      --      30      43      --      --      --      93      
+  --  --  --  --  --  33  --  --  --  --  --  --  --  --  --  97  
+......................................................
+
+Understanding of display method with below display of Tree:
+
+......................................................
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^50**************************************************************
+^^^^^^^^^^^^^^^^25******************************75******************************
+^^^^^^^^12**************37**************--**************87**************
+^^^^--******--******30******43******--******--******80******93******
+^^--**--**--**--**--**33**--**--**--**--**--**--**--**--**--**97**
+......................................................
+
+Steps :
+1. First Visualize the Tree to decide how we need to display the Nodes
+2. The entire Tree to be displayed in a block of pair of dotted lines
+	Hence, write System.out.println("......................................................"); before printing the tree in the form of while loop.
+3. We First need to check if each of the row has nodes right from the first row which has Root node. We need to display nodes in while loop until the row is empty.
+	This is implemented by using a flag called boolean isRowEmpty.
+	boolean isRowEmpty = false;
+	while(isRowEmpty == false) {
+		isRowEmpty = true;
+		|
+		|
+		|
+		
+		if(temp.leftChild != null ||temp.rightChild != null){
+						isRowEmpty = false;
+		}
+		|
+		|
+	}
+	Everytime this while loop gets executed, isRowEmpty is first set to true. 
+	Then the pointer moves to the next node to check if left or right child are not null.
+	If both are not null, isRowEmpty is set to true
+4. The First row looks like below
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^50**************************************************************
+In real : 
+                                50 	                                                          
+Hence before printing first node, there are 32 spaces. So, declare nBlanks as integer and print.
+	int nBlanks = 32
+	
+	Verify the first row is not empty :
+	while(isRowEmpty == false){
+		
+		//Loop 1: To print the space from beginning to the first node
+			for(int j=0; j<nBlanks; j++){
+				//System.out.print("^");
+				System.out.print(" ");
+			}
+	
+	}
+For the 2nd Row :
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^50**************************************************************
+^^^^^^^^^^^^^^^^25******************************75******************************
+In Real :
+                                50                                                              
+                25                              75                              
+                
+For the 2nd row- The space from the beginning to the first node 25 gets reduced to half incomparison to the First row first 32 spaces.
+Also the spaces between 2 nodes space should be equal to nBlanks*2-2
+
+So, to the end of while(isRowEmpty == false)
+	int nBlanks = 32
+	
+	Verify the first row is not empty :
+	while(isRowEmpty == false){
+		
+		//Loop 1: To print the space from beginning to the first node
+			for(int j=0; j<nBlanks; j++){
+				//System.out.print("^");
+				System.out.print(" ");
+			}
+			
+			//Loop 2: To print the space between 2 nodes
+				for(int j=0; j<nBlanks*2-2; j++){
+					//System.out.print("*");
+					System.out.print(" ");
+					}
+			
+			// Reduce the Number of spaces to its half for the next row first node
+			nBlanks /= 2;	
+	}
+
+5. globalStack : Starts from root. First root is pushed into the globalStack
+	localStack : starts from temp.leftChild and temp.rightChild. temp for the first node refers to root.
+	
+
+
+
+
+
+ * */
+	
+	
 	public void displayTree()
 	{
 		Stack globalStack = new Stack();
 		globalStack.push(root);
 		int nBlanks = 32;
+		
+		//Note :isRowEmpty is a flag that determines if there is any node present in the current row to display
+		
 		boolean isRowEmpty = false;
 		System.out.println("......................................................");
 		while(isRowEmpty==false)
 		{
-			Stack localStack = new Stack();
 			isRowEmpty = true;
-			for(int j=0; j<nBlanks; j++)
+			
+			//Loop 1: To print the space from beginning to the first node
+			for(int j=0; j<nBlanks; j++){
+				//System.out.print("^");
 				System.out.print(" ");
+			}
+			
+			//While Loop : Continue until the globalStack is empty
+			//Note : Understand the concept of globalStack and localStack for push and pop operations of nodes to display the tree
+			Stack localStack = new Stack();
 			while(globalStack.isEmpty()==false)
 			{
 				Node temp = (Node)globalStack.pop();
@@ -287,16 +415,20 @@ class Tree
 					localStack.push(null);
 					localStack.push(null);
 				}
-				for(int j=0; j<nBlanks*2-2; j++)
+				
+				//Loop 2: To print the space between 2 nodes
+				for(int j=0; j<nBlanks*2-2; j++){
+					//System.out.print("*");
 					System.out.print(" ");
+					}
 			} // end while globalStack not empty
 			System.out.println();
+			// Reduce the Number of spaces to its half for the next row first node
 			nBlanks /= 2;
 			while(localStack.isEmpty()==false)
 				globalStack.push( localStack.pop() );
 		} // end while isRowEmpty is false
-		System.out.println(
-				"......................................................");
+		System.out.println("......................................................");
 	} // end displayTree()
 	// -------------------------------------------------------------
 } // end class Tree
@@ -396,7 +528,7 @@ public class TreeApp {
  /* 
 Enter first letter of show, insert, find, delete, or traverse: s
 ......................................................
-                                50                                                              
+                                50 	                                                             
                 25                              75                              
         12              37              --              87              
     --      --      30      43      --      --      --      93      
