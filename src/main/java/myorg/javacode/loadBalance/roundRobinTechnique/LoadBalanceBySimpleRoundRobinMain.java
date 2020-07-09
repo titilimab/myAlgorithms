@@ -71,7 +71,7 @@ class RoundRobin implements LoadBalance {
 
 /****************************************************************************************/
 
-public class LoadBalanceMain {
+public class LoadBalanceBySimpleRoundRobinMain {
 	 public static void main(String[] args) {
 	        run();
 	    }
