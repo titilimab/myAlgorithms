@@ -10,6 +10,12 @@ import java.util.Set;
 /****************************************************************************************/
 
 /*
+ Weighted Round Robin Algorithm :
+ Weighted Round Robin builds on the simple Round Robin load balancing method. 
+ In the weighted version, each server in the pool is given a static numerical weighting. 
+ Servers with higher ratings get more requests sent to them.
+ *********
+ 
  class IpPool defines all the servers in the form of ConcurrentHashMap named "ipMap"
  the ConcurrentHashMap contains the server info in key and value pair.
  key --> Server IP (String)
